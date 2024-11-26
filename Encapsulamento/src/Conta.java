@@ -23,16 +23,20 @@ public class Conta {
     }
     
     public void exibirDadosconta(){
-        System.out.println("Nome do cliente: ".concat(cliente));
+        
+        JOptionPane.showInputDialog(
+            "Nome do cliente: " + cliente + "\n" +
+            "Saldo: " + saldo + "\n" +
+            "Conta bloqueada ?" + (isBloqueado() == true?"Sim":"Não"));
+        
+        /*System.out.println("Nome do cliente: ".concat(cliente));
         System.out.println("Saldo: " + saldo);
-        System.out.println("Conta bloquead? " + (isBloqueado() == true?"Sim":"Não"));
+        System.out.println("Conta bloquead? " + (isBloqueado() == true?"Sim":"Não"));*/
     }
     
     //Método para realizar saque na conta do cliente
     public void realizarSaque(){
         if(verificarSenha(0, 2)){
-        }
-        else{
          double vlrSaque = 0;
          vlrSaque = Double.parseDouble(JOptionPane.showInputDialog("Valor a Sacar: "));
          if(vlrSaque >= getSaldo())
@@ -56,8 +60,7 @@ public class Conta {
             JOptionPane.showMessageDialog(null,"O saldo atual é: " + getSaldo());
             return;
         }
-       
-           
+
     }
     
     private boolean verificarSenha(int pwd, int tentativas){
@@ -84,17 +87,27 @@ public class Conta {
     
     public void trocarSenha() {
     // Tentar verificar a senha atual
-    if (verificarSenha(0, 2)) {
-    return; // Sai do método
+        
+    boolean verificacao = verificarSenha(0, 2);
+    System.out.println("Resultado da verificação de senha: " + verificacao); // Adicione um log
+
+    if (verificacao == true) {
+        //return // Sai do método se a verificação foi bem-sucedida
     }
+
+        int senhaNova = Integer.parseInt(JOptionPane.showInputDialog("Digite a nova senha: "));
+        int confirmSenha = Integer.parseInt(JOptionPane.showInputDialog("Digite a senha novamente"));
+
+        if(senhaNova == confirmSenha){
+            setSenha(senhaNova);
+
+            JOptionPane.showMessageDialog(null, "A senha foi alterada com sucesso.");
+
+        }else{
+            JOptionPane.showMessageDialog(null, "As senhas não conferem");
+            trocarSenha();
+        }
     
-    int senhaNova = Integer.parseInt(JOptionPane.showInputDialog("Digite a nova senha: "));
-    
-    setSenha(senhaNova);
-    
-    JOptionPane.showMessageDialog(null, "A senha foi alterada com sucesso.");
-    
-    realizarSaque();
     }
     
     
